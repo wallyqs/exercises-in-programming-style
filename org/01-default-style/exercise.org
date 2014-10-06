@@ -1,23 +1,17 @@
-#+TITLE: Term frequency
+#+TITLE: Term frequency: Monolithic style
 #+TODO: TODO | DONE CANCELED
 #+content: showeverything
 
-*** Let's read the file
-
-#+BEGIN_SRC sh :results output
-ls -la | grep txt 
-#+END_SRC
-
-#+RESULTS:
-: -rw-rw-r--  1 wallyqs wallyqs     67 10月  6 14:15 input.txt
-: -rw-rw-r--  1 wallyqs wallyqs 704145 10月  6 14:15 pride-and-prejudice.txt
-: -rw-rw-r--  1 wallyqs wallyqs    554 10月  6 14:15 stop_words.txt
-: -rw-rw-r--  1 wallyqs wallyqs     75 10月  6 14:15 test.txt
-
-*** Term frequency
-
 - Count how many times each one of the words appear in the document
+- Display the 25 keywords with the most repetitions
 - Display it in reverse
+
+1. Remove the punctuations signs =.';\-"\_=
+2. Remove the empty spaces
+3. Accumulate each one of the words in a hash
+4. Sort by key
+5. Reverse the list
+6. Flush to stdout
   
 **** CANCELED Awk version
 
@@ -35,6 +29,8 @@ END {
 }
 ' | sort -rn | grep -v "^ "
 #+END_SRC
+
+****** COMMENT Result
 
 #+RESULTS:
 #+begin_example
@@ -10527,23 +10523,11 @@ END {
 
 #+end_example
 
-***** Sample list
-
-#+RESULTS:
-: a|able|about|across|after|all|almost|also|am|among|an|and|any|are|as|at|be|because|been|but|by|can|cannot|could|dear|did|do|does|either|else|ever|every|for|from|get|got|had|has|have|he|her|hers|him|his|how|however|i|if|in|into|is|it|its|just|least|let|like|likely|may|me|might|most|must|my|neither|no|nor|not|of|off|often|on|only|or|other|our|own|rather|said|say|says|she|should|since|so|some|than|that|the|their|them|then|there|these|they|this|tis|to|too|twas|us|wants|was|we|were|what|when|where|which|while|who|whom|why|will|with|would|yet|you|your|
-
 **** DONE Ruby version
 
 ***** 1st version
      CLOCK: [2014-10-06 月 14:26]--[2014-10-06 月 14:49] =>  0:23
      CLOCK: [2014-10-06 月 14:26]--[2014-10-06 月 14:26] =>  0:00
-
-1. Remove the punctuations signs =.';\-"\_=
-2. Remove the empty spaces
-3. Accumulate each one of the words in a hash
-4. Sort by key
-5. Reverse the list
-6. Flush to stdout
 
 #+BEGIN_SRC ruby :results output
   @words = Hash.new {|h,k| h[k] = 0 }
@@ -10560,6 +10544,8 @@ END {
     puts "|#{k} | #{v} |"
   end
 #+END_SRC
+
+****** COMMENT Results
 
 #+RESULTS:
 #+begin_example
@@ -17814,7 +17800,7 @@ END {
 |﻿ | 1 |
 #+end_example
 
-****** Results!
+****** COMMENT Results!
 
 | WORD                  | TERM FREQUENCY |
 | the                   |           4218 |
@@ -25577,6 +25563,8 @@ END {
   end
 #+END_SRC
 
+****** COMMENT Results
+
 #+RESULTS:
 #+begin_example
 | i                     | 2070 |
@@ -32801,7 +32789,7 @@ END {
 | ﻿                      |    1 |
 #+end_example
 
-****** Results!
+****** COMMENT Results!
 
 | WORD                  | TERM FREQUENCY |
 | the                   |           4218 |
