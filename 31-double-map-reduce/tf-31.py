@@ -1,9 +1,14 @@
 #!/usr/bin/env python
-import sys, re, operator, string
+import sys
+import re
+import operator
+import string
 
 #
 # Functions for map reduce
 #
+
+
 def partition(data_str, nlines):
     """ 
     Partitions the input data_str (a big string)
@@ -11,7 +16,8 @@ def partition(data_str, nlines):
     """
     lines = data_str.split('\n')
     for i in xrange(0, len(lines), nlines):
-        yield '\n'.join(lines[i:i+nlines])
+        yield '\n'.join(lines[i:i + nlines])
+
 
 def split_words(data_str):
     """ 
@@ -36,6 +42,7 @@ def split_words(data_str):
         result.append((w, 1))
     return result
 
+
 def regroup(pairs_list):
     """
     Takes a list of lists of pairs of the form 
@@ -56,7 +63,8 @@ def regroup(pairs_list):
             else:
                 mapping[p[0]] = [p]
     return mapping
-    
+
+
 def count_words(mapping):
     """ 
     Takes a mapping of the form (word, [(word, 1), (word, 1)...)])
@@ -64,17 +72,20 @@ def count_words(mapping):
     sum of all the reported occurrences
     """
     def add(x, y):
-        return x+y
+        return x + y
 
     return (mapping[0], reduce(add, (pair[1] for pair in mapping[1])))
 
 #
 # Auxiliary functions
 #
+
+
 def read_file(path_to_file):
     with open(path_to_file) as f:
         data = f.read()
     return data
+
 
 def sort(word_freq):
     return sorted(word_freq, key=operator.itemgetter(1), reverse=True)
@@ -88,4 +99,3 @@ word_freqs = sort(map(count_words, splits_per_word.items()))
 
 for (w, c) in word_freqs[0:25]:
     print w, ' - ', c
-

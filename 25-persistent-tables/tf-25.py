@@ -1,23 +1,31 @@
 #!/usr/bin/env python
-import sys, re, string, sqlite3, os.path
+import sys
+import re
+import string
+import sqlite3
+import os.path
 
 #
 # The relational database of this problem consists of 3 tables:
 # documents, words, characters
 #
+
+
 def create_db_schema(connection):
     c = connection.cursor()
-    c.execute('''CREATE TABLE documents (id INTEGER PRIMARY KEY AUTOINCREMENT, name)''')
+    c.execute(
+        '''CREATE TABLE documents (id INTEGER PRIMARY KEY AUTOINCREMENT, name)''')
     c.execute('''CREATE TABLE words (id, doc_id, value)''')
     c.execute('''CREATE TABLE characters (id, word_id, value)''')
     connection.commit()
     c.close()
 
+
 def load_file_into_database(path_to_file, connection):
     """ Takes the path to a file and loads the contents into the database """
     def _extract_words(path_to_file):
         with open(path_to_file) as f:
-            str_data = f.read()    
+            str_data = f.read()
         pattern = re.compile('[\W_]+')
         word_list = pattern.sub(' ', str_data).lower().split()
         with open('../stop_words.txt') as f:
@@ -45,7 +53,8 @@ def load_file_into_database(path_to_file, connection):
         # Add the characters to the database
         char_id = 0
         for char in w:
-            c.execute("INSERT INTO characters VALUES (?, ?, ?)", (char_id, word_id, char))
+            c.execute(
+                "INSERT INTO characters VALUES (?, ?, ?)", (char_id, word_id, char))
             char_id += 1
         word_id += 1
     connection.commit()
@@ -62,8 +71,9 @@ if not os.path.isfile('tf.db'):
 # Now, let's query
 with sqlite3.connect('tf.db') as connection:
     c = connection.cursor()
-    c.execute("SELECT value, COUNT(*) as C FROM words GROUP BY value ORDER BY C DESC")
+    c.execute(
+        "SELECT value, COUNT(*) as C FROM words GROUP BY value ORDER BY C DESC")
     for i in range(25):
         row = c.fetchone()
         if row != None:
-            print row[0] + ' - '  + str(row[1])
+            print row[0] + ' - ' + str(row[1])

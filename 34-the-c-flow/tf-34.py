@@ -1,12 +1,18 @@
 #!/usr/bin/env python
 
-import sys, re, operator, string, inspect
+import sys
+import re
+import operator
+import string
+import inspect
 
 # Reusing the defensive style program to illustrate this
 
 #
 # The functions
 #
+
+
 def extract_words(path_to_file):
     """
     Takes a path to a file and returns the non-stop
@@ -22,7 +28,7 @@ def extract_words(path_to_file):
         except IOError as e:
             print "I/O error({0}) when opening {1}: {2}".format(e.errno, path_to_file, e.strerror)
             fail = True
-    
+
         if not fail:
             pattern = re.compile('[\W_]+')
             word_list = pattern.sub(' ', str_data).lower().split()
@@ -39,6 +45,7 @@ def extract_words(path_to_file):
 
     return [w for w in word_list if not w in stop_words] if not fail else []
 
+
 def frequencies(word_list):
     """
     Takes a list of words and returns a dictionary associating
@@ -54,6 +61,7 @@ def frequencies(word_list):
         return word_freqs
     else:
         return {}
+
 
 def sort(word_freq):
     """
@@ -74,4 +82,3 @@ word_freqs = sort(frequencies(extract_words(filename)))
 
 for tf in word_freqs[0:25]:
     print tf[0], ' - ', tf[1]
-

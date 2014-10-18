@@ -1,5 +1,10 @@
 #!/usr/bin/env python
-import sys, re, operator, string, inspect
+import sys
+import re
+import operator
+import string
+import inspect
+
 
 def read_stop_words():
     """ This function can only be called from a function 
@@ -13,6 +18,7 @@ def read_stop_words():
     stop_words.extend(list(string.ascii_lowercase))
     return stop_words
 
+
 def extract_words(path_to_file):
     # Meta-level data: locals()
     with open(locals()['path_to_file']) as f:
@@ -21,6 +27,7 @@ def extract_words(path_to_file):
     word_list = pattern.sub(' ', str_data).lower().split()
     stop_words = read_stop_words()
     return [w for w in word_list if not w in stop_words]
+
 
 def frequencies(word_list):
     # Meta-level data: locals()
@@ -32,9 +39,11 @@ def frequencies(word_list):
             word_freqs[w] = 1
     return word_freqs
 
+
 def sort(word_freq):
     # Meta-level data: locals()
     return sorted(locals()['word_freq'].iteritems(), key=operator.itemgetter(1), reverse=True)
+
 
 def main():
     word_freqs = sort(frequencies(extract_words(sys.argv[1])))
@@ -43,4 +52,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

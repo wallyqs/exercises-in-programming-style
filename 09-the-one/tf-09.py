@@ -1,10 +1,16 @@
 #!/usr/bin/env python
-import sys, re, operator, string
+import sys
+import re
+import operator
+import string
 
 #
 # The One class for this example
 #
+
+
 class TFTheOne:
+
     def __init__(self, v):
         self._value = v
 
@@ -18,20 +24,26 @@ class TFTheOne:
 #
 # The functions
 #
+
+
 def read_file(path_to_file):
     with open(path_to_file) as f:
         data = f.read()
     return data
 
+
 def filter_chars(str_data):
     pattern = re.compile('[\W_]+')
     return pattern.sub(' ', str_data)
 
+
 def normalize(str_data):
     return str_data.lower()
 
+
 def scan(str_data):
     return str_data.split()
+
 
 def remove_stop_words(word_list):
     with open('../stop_words.txt') as f:
@@ -39,6 +51,7 @@ def remove_stop_words(word_list):
     # add single-letter words
     stop_words.extend(list(string.ascii_lowercase))
     return [w for w in word_list if not w in stop_words]
+
 
 def frequencies(word_list):
     word_freqs = {}
@@ -49,8 +62,10 @@ def frequencies(word_list):
             word_freqs[w] = 1
     return word_freqs
 
+
 def sort(word_freq):
     return sorted(word_freq.iteritems(), key=operator.itemgetter(1), reverse=True)
+
 
 def top25_freqs(word_freqs):
     top25 = ""
@@ -62,13 +77,12 @@ def top25_freqs(word_freqs):
 # The main function
 #
 TFTheOne(sys.argv[1])\
-.bind(read_file)\
-.bind(filter_chars)\
-.bind(normalize)\
-.bind(scan)\
-.bind(remove_stop_words)\
-.bind(frequencies)\
-.bind(sort)\
-.bind(top25_freqs)\
-.printme()
-
+    .bind(read_file)\
+    .bind(filter_chars)\
+    .bind(normalize)\
+    .bind(scan)\
+    .bind(remove_stop_words)\
+    .bind(frequencies)\
+    .bind(sort)\
+    .bind(top25_freqs)\
+    .printme()

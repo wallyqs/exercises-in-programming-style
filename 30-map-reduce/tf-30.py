@@ -1,9 +1,14 @@
 #!/usr/bin/env python
-import sys, re, operator, string
+import sys
+import re
+import operator
+import string
 
 #
 # Functions for map reduce
 #
+
+
 def partition(data_str, nlines):
     """ 
     Partitions the input data_str (a big string)
@@ -11,7 +16,8 @@ def partition(data_str, nlines):
     """
     lines = data_str.split('\n')
     for i in xrange(0, len(lines), nlines):
-        yield '\n'.join(lines[i:i+nlines])
+        yield '\n'.join(lines[i:i + nlines])
+
 
 def split_words(data_str):
     """ 
@@ -36,6 +42,7 @@ def split_words(data_str):
         result.append((w, 1))
     return result
 
+
 def count_words(pairs_list_1, pairs_list_2):
     """ 
     Takes two lists of pairs of the form
@@ -54,10 +61,13 @@ def count_words(pairs_list_1, pairs_list_2):
 #
 # Auxiliary functions
 #
+
+
 def read_file(path_to_file):
     with open(path_to_file) as f:
         data = f.read()
     return data
+
 
 def sort(word_freq):
     return sorted(word_freq, key=operator.itemgetter(1), reverse=True)
@@ -66,9 +76,8 @@ def sort(word_freq):
 # The main function
 #
 splits = map(split_words, partition(read_file(sys.argv[1]), 200))
-splits.insert(0, []) # Normalize input to reduce
+splits.insert(0, [])  # Normalize input to reduce
 word_freqs = sort(reduce(count_words, splits))
 
 for (w, c) in word_freqs[0:25]:
     print w, ' - ', c
-

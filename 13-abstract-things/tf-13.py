@@ -1,10 +1,17 @@
 #!/usr/bin/env python
-import abc, sys, re, operator, string
+import abc
+import sys
+import re
+import operator
+import string
 
 #
 # The abstract things
 #
+
+
 class IDataStorage (object):
+
     """ Models the contents of the file """
     __metaclass__ = abc.ABCMeta
 
@@ -13,7 +20,9 @@ class IDataStorage (object):
         """ Returns the words in storage """
         pass
 
+
 class IStopWordFilter (object):
+
     """ Models the stop word filter """
     __metaclass__ = abc.ABCMeta
 
@@ -22,7 +31,9 @@ class IStopWordFilter (object):
         """ Checks whether the given word is a stop word """
         pass
 
+
 class IWordFrequencyCounter(object):
+
     """ Keeps the word frequency data """
     __metaclass__ = abc.ABCMeta
 
@@ -33,14 +44,17 @@ class IWordFrequencyCounter(object):
 
     @abc.abstractmethod
     def sorted(self):
-        """ Returns the words and their frequencies, sorted by frequency""" 
+        """ Returns the words and their frequencies, sorted by frequency"""
         pass
 
 #
 # The concrete things
 #
+
+
 class DataStorageManager:
     _data = ''
+
     def __init__(self, path_to_file):
         with open(path_to_file) as f:
             self._data = f.read()
@@ -51,8 +65,10 @@ class DataStorageManager:
     def words(self):
         return self._data
 
+
 class StopWordManager:
     _stop_words = []
+
     def __init__(self):
         with open('../stop_words.txt') as f:
             self._stop_words = f.read().split(',')
@@ -60,6 +76,7 @@ class StopWordManager:
 
     def is_stop_word(self, word):
         return word in self._stop_words
+
 
 class WordFrequencyManager:
     _word_freqs = {}
@@ -84,7 +101,10 @@ IWordFrequencyCounter.register(WordFrequencyManager)
 #
 # The application object
 #
+
+
 class WordFrequencyController:
+
     def __init__(self, path_to_file):
         self._storage = DataStorageManager(path_to_file)
         self._stop_word_manager = StopWordManager()

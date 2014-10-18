@@ -1,10 +1,16 @@
 #!/usr/bin/env python
-import sys, re, operator, string, os
+import sys
+import re
+import operator
+import string
+import os
 
 #
 # Two down-to-earth things
 #
-stops = set(open("../stop_words.txt").read().split(",") + list(string.ascii_lowercase))
+stops = set(
+    open("../stop_words.txt").read().split(",") + list(string.ascii_lowercase))
+
 
 def frequencies_imp(word_list):
     word_freqs = {}
@@ -41,8 +47,8 @@ exec('sort = ' + sort_func)
 # The main function. This would work just fine:
 #  word_freqs = sort(frequencies(extract_words(filename)))
 #
-word_freqs = locals()['sort'](locals()['frequencies'](locals()['extract_words'](filename)))
+word_freqs = locals()['sort'](
+    locals()['frequencies'](locals()['extract_words'](filename)))
 
 for (w, c) in word_freqs[0:25]:
     print w, ' - ', c
-

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
-import sys, string
+import sys
+import string
 # the global list of [word, frequency] pairs
 word_freqs = []
 # the list of stop words
@@ -8,7 +9,7 @@ with open('../stop_words.txt') as f:
     stop_words = f.read().split(',')
 stop_words.extend(list(string.ascii_lowercase))
 
-# iterate through the file one line at a time 
+# iterate through the file one line at a time
 for line in open(sys.argv[1]):
     start_char = None
     i = 0
@@ -40,7 +41,8 @@ for line in open(sys.argv[1]):
                         for n in reversed(range(pair_index)):
                             if word_freqs[pair_index][1] > word_freqs[n][1]:
                                 # swap
-                                word_freqs[n], word_freqs[pair_index] = word_freqs[pair_index], word_freqs[n]
+                                word_freqs[n], word_freqs[pair_index] = word_freqs[
+                                    pair_index], word_freqs[n]
                                 pair_index = n
                 # Let's reset
                 start_char = None
@@ -48,4 +50,3 @@ for line in open(sys.argv[1]):
 
 for tf in word_freqs[0:25]:
     print tf[0], ' - ', tf[1]
-

@@ -1,5 +1,6 @@
 #!/usr/bin/env python
-import sys, string
+import sys
+import string
 
 # The shared mutable data
 data = []
@@ -9,6 +10,8 @@ word_freqs = []
 #
 # The procedures
 #
+
+
 def read_file(path_to_file):
     """
     Takes a path to a file and assigns the entire
@@ -17,6 +20,7 @@ def read_file(path_to_file):
     global data
     with open(path_to_file) as f:
         data = data + list(f.read())
+
 
 def filter_chars_and_normalize():
     """
@@ -29,6 +33,7 @@ def filter_chars_and_normalize():
         else:
             data[i] = data[i].lower()
 
+
 def scan():
     """
     Scans data for words, filling the global variable words
@@ -37,6 +42,7 @@ def scan():
     global words
     data_str = ''.join(data)
     words = words + data_str.split()
+
 
 def remove_stop_words():
     global words
@@ -51,6 +57,7 @@ def remove_stop_words():
     for i in reversed(indexes):
         words.pop(i)
 
+
 def frequencies():
     """
     Creates a list of pairs associating
@@ -64,6 +71,7 @@ def frequencies():
             word_freqs[keys.index(w)][1] += 1
         else:
             word_freqs.append([w, 1])
+
 
 def sort():
     """
@@ -85,4 +93,3 @@ sort()
 
 for tf in word_freqs[0:25]:
     print tf[0], ' - ', tf[1]
-

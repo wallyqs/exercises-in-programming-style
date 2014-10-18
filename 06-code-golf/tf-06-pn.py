@@ -1,8 +1,10 @@
 #!/usr/bin/env python
-# My golf score is slightly lower!  
+# My golf score is slightly lower!
 # Best wishes, Peter Norvig
 
-import re, sys, collections
+import re
+import sys
+import collections
 
 stopwords = set(open('../stop_words.txt').read().split(','))
 words = re.findall('[a-z]{2,}', open(sys.argv[1]).read().lower())

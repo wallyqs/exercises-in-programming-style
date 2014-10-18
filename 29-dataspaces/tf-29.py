@@ -1,5 +1,9 @@
 #!/usr/bin/env python
-import re, sys, operator, Queue, threading
+import re
+import sys
+import operator
+import Queue
+import threading
 
 # Two data spaces
 word_space = Queue.Queue()
@@ -9,6 +13,8 @@ stopwords = set(open('../stop_words.txt').read().split(','))
 
 # Worker function that consumes words from the word space
 # and sends partial results to the frequency space
+
+
 def process_words():
     word_freqs = {}
     while True:
@@ -30,7 +36,7 @@ for word in re.findall('[a-z]{2,}', open(sys.argv[1]).read().lower()):
 # Let's create the workers and launch them at their jobs
 workers = []
 for i in range(5):
-    workers.append(threading.Thread(target = process_words))
+    workers.append(threading.Thread(target=process_words))
 [t.start() for t in workers]
 
 # Let's wait for the workers to finish
@@ -47,6 +53,6 @@ while not freq_space.empty():
         else:
             count = freqs[k]
         word_freqs[k] = count
-        
+
 for (w, c) in sorted(word_freqs.iteritems(), key=operator.itemgetter(1), reverse=True)[:25]:
     print w, '-', c

@@ -1,10 +1,16 @@
 #!/usr/bin/env python
-import sys, re, operator, string
+import sys
+import re
+import operator
+import string
 
 #
 # The event management substrate
 #
+
+
 class EventManager:
+
     def __init__(self):
         self._subscriptions = {}
 
@@ -23,8 +29,12 @@ class EventManager:
 #
 # The application entities
 #
+
+
 class DataStorage:
+
     """ Models the contents of the file """
+
     def __init__(self, event_manager):
         self._event_manager = event_manager
         self._event_manager.subscribe('load', self.load)
@@ -43,8 +53,11 @@ class DataStorage:
             self._event_manager.publish(('word', w))
         self._event_manager.publish(('eof', None))
 
+
 class StopWordFilter:
+
     """ Models the stop word filter """
+
     def __init__(self, event_manager):
         self._stop_words = []
         self._event_manager = event_manager
@@ -61,8 +74,11 @@ class StopWordFilter:
         if word not in self._stop_words:
             self._event_manager.publish(('valid_word', word))
 
+
 class WordFrequencyCounter:
+
     """ Keeps the word frequency data """
+
     def __init__(self, event_manager):
         self._word_freqs = {}
         self._event_manager = event_manager
@@ -77,11 +93,14 @@ class WordFrequencyCounter:
             self._word_freqs[word] = 1
 
     def print_freqs(self, event):
-        word_freqs = sorted(self._word_freqs.iteritems(), key=operator.itemgetter(1), reverse=True)
+        word_freqs = sorted(
+            self._word_freqs.iteritems(), key=operator.itemgetter(1), reverse=True)
         for (w, c) in word_freqs[0:25]:
             print w, ' - ', c
 
+
 class WordFrequencyApplication:
+
     def __init__(self, event_manager):
         self._event_manager = event_manager
         self._event_manager.subscribe('run', self.run)

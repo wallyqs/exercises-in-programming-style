@@ -1,5 +1,8 @@
 #!/usr/bin/env python
-import sys, ConfigParser, imp
+import sys
+import ConfigParser
+import imp
+
 
 def load_plugins():
     config = ConfigParser.ConfigParser()
@@ -15,4 +18,3 @@ word_freqs = tffreqs.top25(tfwords.extract_words(sys.argv[1]))
 
 for (w, c) in word_freqs:
     print w, ' - ', c
-
